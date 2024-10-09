@@ -1,0 +1,38 @@
+<html>
+<head>
+    <title>Write Up - Cadastro</title>
+    <script src="main_js"></script>
+    <link rel="stylesheet" type="text/css" href="main_css">
+</head>
+<body>
+    <div class="container">
+        <div class="signup">
+            <section class="signup-left">
+                <span id="alert" class="alert hidden"></span>
+                <form id="registration_form" class="signup-left-form">
+                    <div class="input-box">
+                        <label for="name">Digite seu nome</label>
+                        <input type="text" id="name" name="name" placeholder="Como voce quer ser chamado?">
+                    </div>
+                    <input type="text" name="user" placeholder="Nome de usuario">
+                    <input type="password" name="pass1" placeholder="Escolha uma senha forte">
+                    <input type="password" name="pass2" placeholder="Confirme sua senha">
+                    <span>Selecione seu genero:</span>
+                    <label>
+                        <input type="radio" name="genre" value="masc">
+                        Masculino
+                    </label>
+                    <label>
+                        <input type="radio" name="genre" value="fem">
+                        Feminino
+                    </label><br>
+                    <button id="cadastrar_usuario" onclick="registrationModule.signupProcess(event)">Cadastrar</button>
+                </form>
+            </section>
+            <section class="signup-right">
+                Imagem aqui
+            </section>
+        </div>
+    </div>
+</body>
+</html>

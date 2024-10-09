@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --main-font: 'Poppins', sans-serif;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.signup {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.signup-left, .signup-right {
+    width: 50%;
+    padding: 20px; 
+    box-sizing: border-box; 
+}
+
+.signup-left-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-left-form .input-box {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #eaebef;
+    border-radius: 8px;
+    background-color: #f9fafb;
+    padding: 4px;
+}
+
+.signup-left-form .input-box label {
+    margin-bottom: 4px;
+}
+
+.signup-left-form .input-box input {
+    border: 0;
+    background-color: #f9fafb
+}
+
+.alert{
+    color: red;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}

@@ -1,0 +1,8 @@
+<html>
+<head>
+    <title>Write Up</title>
+</head>
+<body>
+    <a tal:attributes="href string: signup">Cadastro</a>
+</body>
+</html>
