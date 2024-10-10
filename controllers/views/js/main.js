@@ -10,17 +10,27 @@ var registrationModule = {
         alertDiv.classList.remove('visible');
         alertDiv.textContent = '';
 
-        const pass1 = formData.get('pass1');
-        const pass2 = formData.get('pass2');
+        const password = formData.get('password');
+        const confirm_password = formData.get('confirm_password');
+        const user = formData.get('user');
 
         this.setLoading(true);
 
         setTimeout(() => {
-            validation = this.validatePassword(pass1, pass2)
-            if (validation.valid === false) {
+            let passwordV = this.validatePassword(password, confirm_password)
+            if (passwordV.valid === false) {
                 alertDiv.classList.add('visible');
                 alertDiv.classList.remove('hidden');
-                alertDiv.textContent = validation.message;
+                alertDiv.textContent = passwordV.message;
+                this.setLoading(false);
+                return;
+            }
+
+            let userV = this.validateUser(user)
+            if (userV.valid === false) {
+                alertDiv.classList.add('visible');
+                alertDiv.classList.remove('hidden');
+                alertDiv.textContent = userV.message;
                 this.setLoading(false);
                 return;
             }
@@ -30,14 +40,24 @@ var registrationModule = {
                     body: formData,
                     credentials: 'same-origin'
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            throw new Error(err.error);
+                        });
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     alertDiv.classList.add('visible');
                     alertDiv.classList.remove('hidden');
-                    alertDiv.textContent = 'Bem-vindo ' + data.name;
+                    alertDiv.textContent = data.ok;
                 })
                 .catch(error => {
-                    console.error('Erro:', error);
+                    console.log(error)
+                    alertDiv.classList.add('visible');
+                    alertDiv.classList.remove('hidden');
+                    alertDiv.textContent = error.message;
                 })
                 .finally(() => {
                     this.setLoading(false);
@@ -57,9 +77,16 @@ var registrationModule = {
         return {valid: true}
     },
 
+    validateUser: function(user) {
+        if (user.length < 3) {
+            return {valid: false, message: "Seu usuario precisa ter no minimo 3 caracteres"}
+        }
+        return {valid: true}
+    },
+
     setLoading: function(loading){
 
-        const submitButton = document.getElementById('cadastrar_usuario');
+        const submitButton = document.getElementById('register_user');
 
         if (loading) {
             submitButton.disabled = true;

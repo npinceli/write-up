@@ -1,11 +1,11 @@
 from OFS import SimpleItem
 from Globals import DTMLFile
-from Products.writeup.write import WriteUp
+from Products.writeup.controllers.write import WriteUp
 
 
 class Write(SimpleItem.SimpleItem):
     """Root class to initialize the product."""
-    meta_type = "Write"
+    meta_type = 'Write'
 
     write = WriteUp()
 
@@ -22,7 +22,7 @@ class Write(SimpleItem.SimpleItem):
 def manage_add_write(self, id, connection):
     """Create an instance of the product."""
     conn = getattr(self, connection)
-    self._setObject(id, Write(id, Write(id, conn)))
+    self._setObject(id, Write(id, conn))
 
 
 manage_add_write_form = DTMLFile('config/add_write_form', globals())

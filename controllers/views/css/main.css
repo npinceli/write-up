@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
+    --input-background: #f9fafb;
+    --border-color: #eaebef;
+    --label-color: #a8adb7;
+    --button-color: #192126;
+
     --main-font: 'Poppins', sans-serif;
 }
 
@@ -8,6 +13,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: var(--main-font);
 }
 
 body {
@@ -34,32 +40,56 @@ body {
 }
 
 .signup-left, .signup-right {
-    width: 50%;
-    padding: 20px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
     box-sizing: border-box; 
+    width: 720px;
 }
 
 .signup-left-form {
     display: flex;
     flex-direction: column;
+    gap: 12px;
+    width: 100%;
 }
 
 .signup-left-form .input-box {
     display: flex;
     flex-direction: column;
-    border: 1px solid #eaebef;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
-    background-color: #f9fafb;
-    padding: 4px;
+    background-color: var(--input-background);
+    padding: 6px;
 }
 
 .signup-left-form .input-box label {
+    font-size: 12px;
+    color: var(--label-color);
     margin-bottom: 4px;
 }
 
 .signup-left-form .input-box input {
     border: 0;
-    background-color: #f9fafb
+    background-color: var(--input-background);
+}
+
+.signup-left-form .input-box input::placeholder {
+    color: #000;
+}
+
+.signup-left-form .input-box input:focus {
+    outline: none;
+} 
+
+.btn-register {
+    cursor: pointer;
+    background-color: var(--button-color);
+    color: #FFF;
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 12px;
 }
 
 .alert{

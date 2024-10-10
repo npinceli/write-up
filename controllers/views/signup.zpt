@@ -1,0 +1,47 @@
+<html>
+<head>
+    <title>Write Up - Cadastro</title>
+    <script src="main_js"></script>
+    <link rel="stylesheet" type="text/css" href="main_css">
+</head>
+<body>
+    <div class="container">
+        <div class="signup">
+            <section class="signup-left">
+                <form id="registration_form" class="signup-left-form">
+                    <div class="input-box">
+                        <label for="name">Digite seu nome</label>
+                        <input type="text" id="name" name="name" placeholder="...">
+                    </div>
+                    <div class="input-box">
+                        <label for="user">Digite seu usuario</label>
+                        <input type="text" name="user" id="user" placeholder="..." autocomplete="off" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="password">Digite sua senha</label>
+                        <input type="password" name="password" id="password" placeholder="..." autocomplete="off" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="confirm_password">Confirme sua senha</label>
+                        <input type="password" name="confirm_password" id="confirm_password" placeholder="..." required>
+                    </div>
+                    <span>Selecione seu genero:</span>
+                    <label>
+                        <input type="radio" name="genre" value="boy">
+                        Masculino
+                    </label>
+                    <label>
+                        <input type="radio" name="genre" value="girl">
+                        Feminino
+                    </label><br>
+                    <span id="alert" class="alert hidden"></span>
+                    <button class="btn-register" id="register_user" onclick="registrationModule.signupProcess(event)">Cadastrar</button>
+                </form>
+            </section>
+            <section class="signup-right">
+                I
+            </section>
+        </div>
+    </div>
+</body>
+</html>
