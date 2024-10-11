@@ -11,35 +11,38 @@
                 <form id="registration_form" class="signup-left-form">
                     <div class="input-box">
                         <label for="name">Digite seu nome</label>
-                        <input type="text" id="name" name="name" placeholder="...">
+                        <input type="text" id="name" name="name">
                     </div>
                     <div class="input-box">
                         <label for="user">Digite seu usuario</label>
-                        <input type="text" name="user" id="user" placeholder="..." autocomplete="off" required>
+                        <input type="text" name="user" id="user" autocomplete="off">
+                    </div>
+                    <div class="input-box">
+                        <label for="genre">Selecione seu genero</label>
+                        <select id="genre" name="genre">
+                            <option value="0"></option>
+                            <option value="1">Masculino</option>
+                            <option value="2">Feminino</option>
+                        </select>
                     </div>
                     <div class="input-box">
                         <label for="password">Digite sua senha</label>
-                        <input type="password" name="password" id="password" placeholder="..." autocomplete="off" required>
+                        <input type="password" name="password" id="password" autocomplete="off">
                     </div>
                     <div class="input-box">
                         <label for="confirm_password">Confirme sua senha</label>
-                        <input type="password" name="confirm_password" id="confirm_password" placeholder="..." required>
+                        <input type="password" name="confirm_password" id="confirm_password">
                     </div>
-                    <span>Selecione seu genero:</span>
-                    <label>
-                        <input type="radio" name="genre" value="boy">
-                        Masculino
-                    </label>
-                    <label>
-                        <input type="radio" name="genre" value="girl">
-                        Feminino
-                    </label><br>
-                    <span id="alert" class="alert hidden"></span>
                     <button class="btn-register" id="register_user" onclick="registrationModule.signupProcess(event)">Cadastrar</button>
+                    <div class="alert-container">
+                        <div class="alert-box">
+                            <span id="alert" class="alert hidden"></span>
+                        </div>
+                    </div>
                 </form>
             </section>
-            <section class="signup-right">
-                I
+            <section class="signup-right" style="overflow: hidden;">
+                Imagem
             </section>
         </div>
     </div>

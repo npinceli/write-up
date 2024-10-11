@@ -10,13 +10,24 @@ var registrationModule = {
         alertDiv.classList.remove('visible');
         alertDiv.textContent = '';
 
+        const user = formData.get('user');
+        const name = formData.get('name');
+        const genre = formData.get('genre');
         const password = formData.get('password');
         const confirm_password = formData.get('confirm_password');
-        const user = formData.get('user');
 
         this.setLoading(true);
 
         setTimeout(() => {
+            let fieldsV = this.validateFields(user, name, genre, password, confirm_password)
+            if (fieldsV.valid === false) {
+                alertDiv.classList.add('visible');
+                alertDiv.classList.remove('hidden');
+                alertDiv.textContent = fieldsV.message;
+                this.setLoading(false);
+                return;
+            }
+
             let passwordV = this.validatePassword(password, confirm_password)
             if (passwordV.valid === false) {
                 alertDiv.classList.add('visible');
@@ -49,9 +60,7 @@ var registrationModule = {
                     return response.json();
                 })
                 .then(data => {
-                    alertDiv.classList.add('visible');
-                    alertDiv.classList.remove('hidden');
-                    alertDiv.textContent = data.ok;
+                    console.log(data.success);
                 })
                 .catch(error => {
                     console.log(error)
@@ -64,6 +73,13 @@ var registrationModule = {
                 })
         }, 1500)
         
+    },
+
+    validateFields: function(user, name, genre, password, confirm_password) {
+        if (user === '' || name === '' || genre === '' || password === '' || confirm_password === '') {
+            return {valid: false, message: "Preencha todos os campos"}
+        }
+        return {valid: true}
     },
 
     validatePassword: function(password1, password2) {
@@ -90,7 +106,11 @@ var registrationModule = {
 
         if (loading) {
             submitButton.disabled = true;
-            submitButton.textContent = 'Carregando...';
+            submitButton.innerHTML = `
+                <svg id="spinner" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/></svg>
+            `
+            submitButton.querySelector('#spinner').style.animation = 'rotate 2s linear infinite'
+
         } else {
             submitButton.disabled = false;
             submitButton.textContent = 'Cadastrar'

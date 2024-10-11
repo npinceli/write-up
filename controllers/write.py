@@ -46,5 +46,5 @@ class WriteUp(SimpleItem.SimpleItem):
             self._write_model.create_user(name=name, user=user, genre=genre,
                                           password=pwd, avatar=avatar)
             self.REQUEST.response.setStatus(200)
-            msg = {'ok': 'Cadastrado com sucesso.'}
+            msg = {'success': 'Cadastrado com sucesso.'}
             return json.dumps(msg)

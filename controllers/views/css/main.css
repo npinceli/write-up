@@ -6,6 +6,10 @@
     --label-color: #a8adb7;
     --button-color: #192126;
 
+    --alert-error: #f7d7da;
+    --alert-error-title : #723036;
+    --alert-error-border: #f5c3c8;
+
     --main-font: 'Poppins', sans-serif;
 }
 
@@ -73,6 +77,9 @@ body {
 .signup-left-form .input-box input {
     border: 0;
     background-color: var(--input-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2px 4px;
 }
 
 .signup-left-form .input-box input::placeholder {
@@ -83,6 +90,13 @@ body {
     outline: none;
 } 
 
+.signup-left-form .input-box select{
+    background-color: var(--input-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2px 4px;
+}
+
 .btn-register {
     cursor: pointer;
     background-color: var(--button-color);
@@ -92,8 +106,21 @@ body {
     padding: 12px;
 }
 
+.alert-container {
+    height: 40px;
+    text-align: center;
+}
+
+.alert-box {
+    background-color: var(--alert-error);
+    border-radius: 8px;
+}
+
 .alert{
-    color: red;
+    color: var(--alert-error-title);
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid var(--alert-error-border);
 }
 
 .hidden {
@@ -102,4 +129,17 @@ body {
 
 .visible {
     display: block;
+}
+
+#spinner {
+    transform-origin: center;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
