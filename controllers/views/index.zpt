@@ -4,5 +4,6 @@
 </head>
 <body>
     <a tal:attributes="href string: signup">Cadastro</a>
+    <a tal:attributes="href string: login">Login</a>
 </body>
 </html>

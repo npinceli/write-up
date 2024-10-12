@@ -1,6 +1,7 @@
-SELECT 
-    1 AS results 
+SELECT
+    username,
+    password
 FROM 
-    users 
+    users
 WHERE 
     username = <dtml-sqlvar user type="string">

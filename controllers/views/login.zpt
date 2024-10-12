@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Write Up - Login</title>
+        <script src="main_js"></script>
+        <link rel="stylesheet" type="text/css" href="main_css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="fields">
+                <section class="fields-left">
+                    Imagem
+                </section>
+                <section class="fields-right">
+                    <form id="login_form" class="fields-form">
+                        <div class="input-box">
+                            <label for="user">Digite seu usuario</label>
+                            <input type="text" name="user" id="user" autocomplete="off">
+                        </div>
+                        <div class="input-box">
+                            <label for="password">Digite sua senha</label>
+                            <input type="password" name="password" id="password" autocomplete="off">
+                        </div>
+                        <button class="btn-black" id="btn_submit" onclick="loginModule.loginProcess(event)">Entrar</button>
+                        <div class="alert-container">
+                            <div class="alert-box">
+                                <span id="alert" class="alert hidden"></span>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </body>
+</html>

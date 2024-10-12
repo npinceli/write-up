@@ -6,9 +6,9 @@
 </head>
 <body>
     <div class="container">
-        <div class="signup">
-            <section class="signup-left">
-                <form id="registration_form" class="signup-left-form">
+        <div class="fields">
+            <section class="fields-left">
+                <form id="registration_form" class="fields-form">
                     <div class="input-box">
                         <label for="name">Digite seu nome</label>
                         <input type="text" id="name" name="name">
@@ -33,7 +33,7 @@
                         <label for="confirm_password">Confirme sua senha</label>
                         <input type="password" name="confirm_password" id="confirm_password">
                     </div>
-                    <button class="btn-register" id="register_user" onclick="registrationModule.signupProcess(event)">Cadastrar</button>
+                    <button class="btn-black" id="btn_submit" onclick="registrationModule.signupProcess(event)">Cadastrar</button>
                     <div class="alert-container">
                         <div class="alert-box">
                             <span id="alert" class="alert hidden"></span>
@@ -41,7 +41,7 @@
                     </div>
                 </form>
             </section>
-            <section class="signup-right" style="overflow: hidden;">
+            <section class="fields-right" style="overflow: hidden;">
                 Imagem
             </section>
         </div>
