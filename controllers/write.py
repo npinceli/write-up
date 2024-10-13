@@ -69,9 +69,13 @@ class WriteUp(SimpleItem.SimpleItem):
 
         user_info = self._write_model.search_user_info(user=user)
 
-        if user_info[0]:
+        if user_info:
             if pbkdf2_sha256.verify(password, user_info[0]['password']):
                 self.REQUEST.response.setStatus(200)
+            else:
+                self.REQUEST.response.setStatus(400)
+                msg = {'error': 'Senha incorreta'}
+                return json.dumps(msg)
         else:
             self.REQUEST.response.setStatus(400)
             msg = {'error': 'Usuario nao encontrado'}
