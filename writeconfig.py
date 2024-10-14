@@ -1,6 +1,7 @@
 from OFS import SimpleItem
 from Globals import DTMLFile
 from Products.writeup.controllers.write import WriteUp
+from Products.writeup.controllers.feed.feed import Feed
 
 
 class Write(SimpleItem.SimpleItem):
@@ -8,6 +9,7 @@ class Write(SimpleItem.SimpleItem):
     meta_type = 'Write'
 
     write = WriteUp()
+    feed = Feed()
 
     def __init__(self, id, connection):
         """Initialize the instance with an ID and database connection."""
