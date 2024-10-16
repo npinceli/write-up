@@ -71,6 +71,8 @@ class WriteUp(SimpleItem.SimpleItem):
 
         if user_info:
             if pbkdf2_sha256.verify(password, user_info[0]['password']):
+                self.REQUEST.SESSION.set('1', True)
+                self.REQUEST.SESSION.set('user_id', user_info[0]['id'])
                 self.REQUEST.response.setStatus(200)
             else:
                 self.REQUEST.response.setStatus(400)

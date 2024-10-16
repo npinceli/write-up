@@ -154,7 +154,7 @@ var loginModule = {
                     });
                 }
             }).then(data => {
-                console.log(1);
+                window.location = '/w/write/feed/'
             }).catch(error => {
                 alert.classList.add('visible');
                 alert.classList.remove('hidden');
