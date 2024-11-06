@@ -21,6 +21,7 @@
 .content {
     display: grid;
     grid-template-columns: 0.7fr 3fr 1fr;
+    gap: 26px;
 }
 
 .aside-menu {
@@ -100,4 +101,42 @@
 
 .feed-menu ul li {
     list-style-type: none;
+}
+
+.aside-suggestions {
+    padding: 12px;
+}
+
+.suggestions {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 24px;
+}
+
+.suggestions-items {
+    width: 100%;;
+    display: grid;
+    grid-template-columns: auto 1fr .5fr;
+}
+
+.suggestions-items div {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
+}
+
+.suggestions-items img {
+    justify-self: center;
+}
+
+.suggestions-items button {
+    background-color: var(--blue-950);
+    color: #FFFFFF;
+    font-weight: bold;
+    border: none;
+    border-radius: 18px;
+    cursor: pointer;
+    height: 38px;
+    align-self: center;
 }
