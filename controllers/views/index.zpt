@@ -3,7 +3,7 @@
     <title>Write Up</title>
 </head>
 <body>
-    <a tal:attributes="href string: signup">Cadastro</a>
-    <a tal:attributes="href string: login">Login</a>
+    <a href="signup">Cadastro</a>
+    <a href="login">Login</a>
 </body>
 </html>
