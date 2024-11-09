@@ -1,0 +1,1 @@
+INSERT INTO followers (follower_id, following_id) VALUES (<dtml-sqlvar user_id type="int">, <dtml-sqlvar following_id type="int">)

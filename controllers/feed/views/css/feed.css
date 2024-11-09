@@ -80,7 +80,7 @@
 }
 
 .aside-menu-options-selected {
-    background-color: var(--blue-950);
+    background-color: var(--blue-300);
     color: #FFFFFF;
 }
 
@@ -117,7 +117,7 @@
 .suggestions-items {
     width: 100%;;
     display: grid;
-    grid-template-columns: auto 1fr .5fr;
+    grid-template-columns: auto 1fr .7fr;
 }
 
 .suggestions-items div {
@@ -130,7 +130,7 @@
     justify-self: center;
 }
 
-.suggestions-items button {
+.suggestions-items button{
     background-color: var(--blue-950);
     color: #FFFFFF;
     font-weight: bold;
@@ -139,4 +139,13 @@
     cursor: pointer;
     height: 38px;
     align-self: center;
+    transition: .2s;
+}
+
+.suggestions-items button:hover{
+    background-color: var(--blue-300);
+}
+
+.hidden {
+    display: none;
 }

@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>Write Up - Feed</title>
-    <script src=""></script>
+    <script src="feed_js"></script>
     <link rel="stylesheet" type="text/css" href="feed_css">
 </head>
 <body>
@@ -45,8 +45,10 @@
                         <div>
                             <b tal:content="sug/name"></b>
                             <span tal:content="sug/username"></span>
+                            <input type="hidden" tal:attributes="value sug/id">
                         </div>
-                        <button>Seguir</button>
+                        <button id="btn_follow" onclick="followModule.follow(this)">Seguir</button>
+                        <button id="btn_unfollow" class="hidden" onclick="followModule.unfollow(this)">Deixar de seguir</button>
                     </div>
                 </tal:block>
             </div>

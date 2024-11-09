@@ -2,6 +2,7 @@ from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.writeup.models.write_m import WriteM
 from Products.writeup.models.feed.feed_m import FeedM
+import json
 
 
 class Feed(SimpleItem.SimpleItem):
@@ -37,3 +38,35 @@ class Feed(SimpleItem.SimpleItem):
     def suggestion_list(self, user_id):
         """."""
         return self._feed_model.search_suggestions(user_id=user_id)
+
+    def follow_user(self):
+        """."""
+        self.REQUEST.response.setHeader('Content-Type', 'application/json')
+
+        user_id = self.REQUEST.SESSION.get('user_id')
+        data = self.REQUEST.get('BODY')
+        data = json.loads(data)
+        following_id = int(data.get('userId'))
+
+        self._feed_model.follow_user(user_id=user_id,
+                                     following_id=following_id)
+
+        self.REQUEST.response.setStatus(200)
+
+        return json.dumps({"msg": "Success"})
+
+    def unfollow_user(self):
+        """."""
+        self.REQUEST.response.setHeader('Content-Type', 'application/json')
+
+        user_id = self.REQUEST.SESSION.get('user_id')
+        data = self.REQUEST.get('BODY')
+        data = json.loads(data)
+        unfollowing_id = int(data.get('userId'))
+
+        self._feed_model.unfollow_user(user_id=user_id,
+                                       unfollowing_id=unfollowing_id)
+
+        self.REQUEST.response.setStatus(200)
+
+        return json.dumps({"msg": "Success"})
