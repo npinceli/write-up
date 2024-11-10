@@ -10,15 +10,7 @@
             <tal:block metal:use-macro="options/left_menu/macros/left-menu"></tal:block>
         </aside>
         <section class="feed">
-            <div class="feed-menu">
-                <h1>Feed</h1>
-                <ul>
-                    <li>Recentes</li>
-                    <li>Seguindo</li>
-                </ul>
-            </div>
-            <div class="feed-posts">
-            </div>
+           <tal:block metal:use-macro="options/left_menu/macros/top-menu"></tal:block>
         </section>
         <aside class="aside-suggestions">
             <h2>Sugestoes</h2>

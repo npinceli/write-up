@@ -17,3 +17,14 @@
         </ul>
     </div>
 </tal:block>
+
+<tal:block metal:define-macro="top-menu">
+    <div class="feed-menu">
+        <h1>Feed</h1>
+        <ul>
+            <li>Recentes</li>
+            <li>Seguindo</li>
+        </ul>
+    </div>
+</tal:block>
+
