@@ -62,7 +62,7 @@
     width: 100%;
     border: 1px solid transparent;
     padding: 8px;
-    border-radius: 18px; 
+    border-radius: 8px; 
     display: flex;
     align-items: center;
     gap: 12px;
@@ -137,7 +137,7 @@
     color: #FFFFFF;
     font-weight: bold;
     border: none;
-    border-radius: 18px;
+    border-radius: 8px;
     cursor: pointer;
     height: 38px;
     align-self: center;
@@ -157,7 +157,7 @@
     border: 1px solid var(--blue-300);
     padding: 16px;
     margin-top: 12px;
-    border-radius: 12px;
+    border-radius: 8px;
 }
 
 .post-user {
@@ -245,7 +245,7 @@
     box-sizing: border-box;
     background-color: var(--blue-400);
     padding: 6px;
-    border-radius: 6px;
+    border-radius: 8px;
     font-weight: 600;
     color: #FFFFFF;
     width: 80px;
