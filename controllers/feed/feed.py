@@ -8,6 +8,7 @@ import json
 class Feed(SimpleItem.SimpleItem):
     """Feed Controller."""
     _index = PageTemplateFile('views/index.zpt', globals())
+    feed_macros = PageTemplateFile('views/feed_macros.zpt', globals())
     feed_js = PageTemplateFile('views/js/feed.js', globals())
     feed_css = PageTemplateFile('views/css/feed.css', globals())
 
@@ -30,7 +31,8 @@ class Feed(SimpleItem.SimpleItem):
                     'username': data.username,
                     'avatar': data.avatar
                 },
-                suggestions=sugg
+                suggestions=sugg,
+                left_menu=self.feed_macros
             )
         else:
             return self.REQUEST.RESPONSE.redirect('/w/write')
