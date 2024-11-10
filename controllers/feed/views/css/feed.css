@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
+    --blue-100: #dbeafe;
     --blue-300: #93c5fd;
+    --blue-400: #60a5fa;
     --blue-950: #172554;
 
     --main-font: 'Poppins', sans-serif;
@@ -148,4 +150,159 @@
 
 .hidden {
     display: none;
+}
+
+.post {
+    background-color: var(--blue-100);
+    border: 1px solid var(--blue-300);
+    padding: 16px;
+    margin-top: 12px;
+    border-radius: 12px;
+}
+
+.post-user {
+    display: flex;
+    align-items: center;
+}
+
+.post-text {
+    margin-top: 16px;
+}
+
+.post-user-info {
+    display: flex;
+    width: 100%;
+}
+
+.post-user-info div {
+    display: flex;
+    flex-direction: column;
+    margin-left: 12px;
+}
+
+.post-user-date {
+    flex: 1;
+    text-align: end;
+}
+
+.opacity-50 {
+    opacity: 50%;
+}
+
+.font-14 {
+    font-size: 14px;
+}
+
+.modal-post {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 10;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 16px 16px;
+    border-radius: 8px;
+    width: 40%;
+    max-width: 800px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-content-header .title {
+    font-size: 18px;
+}
+
+.modal-content textarea {
+    width: 100%;
+    resize: none;
+    border-radius: 8px;
+    border: 1px solid var(--blue-300);
+    outline: none;
+    padding: 8px;
+    margin: 8px 0; 
+}
+
+.btn-close-modal {
+    align-self: center;
+    cursor: pointer;
+}
+
+.btn-modal-post {
+    box-sizing: border-box;
+    background-color: var(--blue-400);
+    padding: 6px;
+    border-radius: 6px;
+    font-weight: 600;
+    color: #FFFFFF;
+    width: 80px;
+    height: 40px;
+    text-align: center;
+    align-self: end;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.icon-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-modal-post:hover {
+    background-color: var(--blue-950);
+}
+
+.btn-open-modal {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: var(--blue-400);
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 7;
+}
+
+.overlay-post {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    display: none;
+    z-index: 9;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
 }

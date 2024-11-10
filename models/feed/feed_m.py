@@ -22,6 +22,14 @@ class FeedM(SimpleItem.SimpleItem):
         """."""
         self._sql_del_follower(user_id=user_id, unfollowing_id=unfollowing_id)
 
+    def create_post(self, user_id, post_text):
+        """."""
+        return self._sql_ins_post(user_id=user_id, post_text=post_text)
+
+    def post_list(self):
+        """."""
+        return self._sql_sel_posts()
+
     _sql_search_suggestions = SQL(
         id='zsql_search_suggestions', title='', connection_id='connection',
         arguments='user_id', template=open(
@@ -38,4 +46,16 @@ class FeedM(SimpleItem.SimpleItem):
         id='zsql_del_follower', title='', connection_id='connection',
         arguments='user_id\nunfollowing_id', template=open(
             product_path + 'sql/sql_del_follower.sql').read()
+    )
+
+    _sql_ins_post = SQL(
+        id='zsql_ins_post', title='', connection_id='connection',
+        arguments='user_id\npost_text', template=open(
+            product_path + 'sql/sql_ins_post.sql').read()
+    )
+
+    _sql_sel_posts = SQL(
+        id='zsql_sel_posts', title='', connection_id='connection',
+        arguments='', template=open(
+            product_path + 'sql/sql_sel_posts.sql').read()
     )

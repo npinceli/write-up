@@ -21,8 +21,8 @@ class Feed(SimpleItem.SimpleItem):
         user_id = self.REQUEST.SESSION.get('user_id')
 
         data = self._write_model.search_user_info(user_id=user_id)[0]
-
         sugg = self.suggestion_list(user_id=user_id)
+        posts = self._feed_model.post_list()
 
         if signed:
             return self._index(
@@ -32,7 +32,8 @@ class Feed(SimpleItem.SimpleItem):
                     'avatar': data.avatar
                 },
                 suggestions=sugg,
-                left_menu=self.feed_macros
+                posts=posts,
+                macros=self.feed_macros
             )
         else:
             return self.REQUEST.RESPONSE.redirect('/w/write')
@@ -72,3 +73,25 @@ class Feed(SimpleItem.SimpleItem):
         self.REQUEST.response.setStatus(200)
 
         return json.dumps({"msg": "Success"})
+
+    def create_post(self):
+        """."""
+        user_id = self.REQUEST.SESSION.get('user_id')
+        data = self.REQUEST.get('BODY')
+        data = json.loads(data)
+        post_text = data.get('postText')
+
+        post = self._feed_model.create_post(user_id=user_id,
+                                            post_text=post_text)
+
+        if post:
+            ok = {
+                    'msg': 'Criado com sucesso',
+                    'id_user': post[0]['id_user'],
+                    'name': post[0]['name'],
+                    'username': post[0]['username'],
+                    'avatar': post[0]['avatar'],
+                    'createdAt': post[0]['created_at_f']
+                }
+            self.REQUEST.response.setStatus(200)
+            return json.dumps(ok)
