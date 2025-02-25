@@ -43,8 +43,13 @@ class FeedM(SimpleItem.SimpleItem):
         """."""
         return self._sql_ins_notification(notifier_id=notifier_id,
                                           notified_id=notified_id, 
-                                          message=message, type=type,
-                                          post_id=post_id)
+                                          message=message, post_id=post_id,
+                                          notification_type=type
+                                          )
+
+    def get_post_info(self, post_id):
+        """."""
+        return self._sql_sel_post_info(post_id=post_id)
 
     _sql_search_suggestions = SQL(
         id='zsql_search_suggestions', title='', connection_id='connection',
@@ -90,7 +95,8 @@ class FeedM(SimpleItem.SimpleItem):
 
     _sql_ins_notification = SQL(
         id='zsql_ins_notification', title='', connection_id='connection',
-        arguments='notifier_id\nnotified_id\ntype\nmessage\nmessage',
+        arguments='notifier_id\nnotified_id\nnotification_type\nmessage'
+        '\nmessage',
         template=open(
             product_path + 'sql/sql_ins_notification.sql').read()
     )

@@ -82,7 +82,7 @@ class Feed(SimpleItem.SimpleItem):
         user_id = self.REQUEST.SESSION.get('user_id')
         data = self.REQUEST.get('BODY')
         data = json.loads(data)
-        post_text = data.get('postText')
+        post_text = data['postText']
 
         post = self._feed_model.create_post(user_id=user_id,
                                             post_text=post_text)
@@ -101,11 +101,11 @@ class Feed(SimpleItem.SimpleItem):
             return json.dumps(ok)
 
     def like_post(self):
-        """."""
+        """Curtir a postagem de um usuario."""
         notifier_id = self.REQUEST.SESSION.get('user_id')
         data = self.REQUEST.get('BODY')
         data = json.loads(data)
-        post_id = data.get('postId')
+        post_id = data['postId']
 
         liked = self._feed_model.like_post(post_id=post_id,
                                            user_id=notifier_id)
@@ -115,7 +115,7 @@ class Feed(SimpleItem.SimpleItem):
         if liked:
             self.send_notification(notifier_id=notifier_id,
                                    post_id=post_id, type=1,
-                                   notified_id=post_infos.notified_id)
+                                   notified_id=post_infos.id_user)
 
             self.REQUEST.response.setStatus(200)
             return json.dumps({"msg": "Success"})

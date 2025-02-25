@@ -77,65 +77,63 @@ var postModule = {
         this.setLoading(true);
 
         setTimeout(() => {
-            if (text === '') {
-                this.setLoading(false);
-            } else {
-                fetch('create_post', {
-                    method: "POST",
-                    body: JSON.stringify({'postText': text}),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: 'same-origin'
-                }).then(response => {
-                    if(!response.ok){
-                        throw new Error('error');
-                    }
-                    else {
-                        return response.json();
-                    }
-                }).then(data => {
-                    const containerPost = document.querySelector('.container-posts');
-                    const newPost = `
-                        <div class="post">
-                            <div class="post-user">
-                                <img src="${data.avatar}" width="50px" height="50px">
-                                <div class="post-user-info">
-                                    <div>
-                                        <b>${data.name}</b>
-                                        <span class="opacity-50 font-14">${data.username}</span>
-                                    </div>
-                                    <span class="post-user-date opacity-50 font-14">${data.createdAt}</span>
+            fetch('create_post', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'postText': text
+                }),
+            }).then(response => {
+                if(!response.ok){
+                    return response.json().then(data => {
+                        const errorMessage = data.message;
+                        throw new Error(errorMessage)
+                    })
+                }
+                return response.json();
+            }).then(data => {
+                const containerPost = document.querySelector('.container-posts');
+                const newPost = `
+                    <div class="post">
+                        <div class="post-user">
+                            <img src="${data.avatar}" width="50px" height="50px">
+                            <div class="post-user-info">
+                                <div>
+                                    <b>${data.name}</b>
+                                    <span class="opacity-50 font-14">${data.username}</span>
                                 </div>
-                            </div>
-                            <p class="post-text">${text}</p>
-                            <div class="post-data">
-                                <div class="post-data-likes">
-                                    <span onclick="postModule.likePost(${data.id_post})">
-                                        <i class="fa-regular fa-heart"></i>
-                                    </span>
-                                    <span id="numLikes_${data.id_post}">0</span>
-                                </div>
-                                <div class="post-data-comments">
-                                    <span>
-                                        <i class="fa-regular fa-comment"></i>
-                                    </span>
-                                    <span>0</span>
-                                </div>
+                                <span class="post-user-date opacity-50 font-14">${data.createdAt}</span>
                             </div>
                         </div>
-                    `
-                    containerPost.insertAdjacentHTML("afterbegin", newPost);
-                    document.getElementById("post_text").value = '';
-                    this.closeModal();
-                }).catch(error => {
-                    console.log(error)
-                    this.setLoading(false)
-                }).finally(() => {
-                    this.setLoading(false)
-                })
-            }
-        }, 700);
+                        <p class="post-text">${text}</p>
+                        <div class="post-data">
+                            <div class="post-data-likes">
+                                <span class="btn-like-post" onclick="postModule.likePost(${data.id_post})">
+                                    <i class="fa-regular fa-heart"></i>
+                                </span>
+                                <span id="numLikes_${data.id_post}">0</span>
+                            </div>
+                            <div class="post-data-comments">
+                                <span class="btn-comment-post">
+                                    <i class="fa-regular fa-comment"></i>
+                                </span>
+                                <span>0</span>
+                            </div>
+                        </div>
+                    </div>
+                `
+                containerPost.insertAdjacentHTML("afterbegin", newPost);
+                document.getElementById("post_text").value = '';
+                this.closeModal();
+            }).catch(error => {
+                console.log(error)
+                this.setLoading(false)
+            }).finally(() => {
+                this.setLoading(false)
+            })
+            }, 700);
     },
 
     setLoading: function(loading) {
@@ -159,18 +157,20 @@ var postModule = {
 
         fetch('like_post', {
             method: 'POST',
-            body: JSON.stringify({'postId': postId}),
             headers: {
                 'Content-Type': 'application/json'
             },
-            credentials: 'same-origin'
+            body: JSON.stringify({
+                'postId': postId
+            }),
         }).then(response => {
             if(!response.ok){
-                throw new Error('error');
+                return response.json().then(data => {
+                    const errorMessage = data.message;
+                    throw new Error(errorMessage)
+                })
             }
-            else {
-                return response.json();
-            }
+            return response.json();
         }).then(data => {
             var currentLikes = parseInt(numLikes.textContent);
 
