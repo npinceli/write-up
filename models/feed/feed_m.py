@@ -30,6 +30,22 @@ class FeedM(SimpleItem.SimpleItem):
         """."""
         return self._sql_sel_posts()
 
+    def like_post(self, post_id, user_id):
+        """."""
+        return self._sql_ins_like_post(post_id=post_id, user_id=user_id)
+
+    def get_user_info(self, user_id):
+        """."""
+        return self._sql_sel_user_info(user_id=user_id)
+
+    def ins_notification(self, notifier_id, notified_id, type, message,
+                         post_id=None):
+        """."""
+        return self._sql_ins_notification(notifier_id=notifier_id,
+                                          notified_id=notified_id, 
+                                          message=message, type=type,
+                                          post_id=post_id)
+
     _sql_search_suggestions = SQL(
         id='zsql_search_suggestions', title='', connection_id='connection',
         arguments='user_id', template=open(
@@ -58,4 +74,29 @@ class FeedM(SimpleItem.SimpleItem):
         id='zsql_sel_posts', title='', connection_id='connection',
         arguments='', template=open(
             product_path + 'sql/sql_sel_posts.sql').read()
+    )
+
+    _sql_ins_like_post = SQL(
+        id='zsql_ins_like_post', title='', connection_id='connection',
+        arguments='post_id\nuser_id', template=open(
+            product_path + 'sql/sql_ins_like_post.sql').read()
+    )
+
+    _sql_sel_user_info = SQL(
+        id='zsql_sel_user_info', title='', connection_id='connection',
+        arguments='user_id', template=open(
+            product_path + 'sql/sql_sel_user_info.sql').read()
+    )
+
+    _sql_ins_notification = SQL(
+        id='zsql_ins_notification', title='', connection_id='connection',
+        arguments='notifier_id\nnotified_id\ntype\nmessage\nmessage',
+        template=open(
+            product_path + 'sql/sql_ins_notification.sql').read()
+    )
+
+    _sql_sel_post_info = SQL(
+        id='zsql_sel_post_info', title='', connection_id='connection',
+        arguments='post_id', template=open(
+            product_path + 'sql/sql_sel_post_info.sql').read()
     )

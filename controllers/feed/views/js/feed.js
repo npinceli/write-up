@@ -109,6 +109,20 @@ var postModule = {
                                 </div>
                             </div>
                             <p class="post-text">${text}</p>
+                            <div class="post-data">
+                                <div class="post-data-likes">
+                                    <span onclick="postModule.likePost(${data.id_post})">
+                                        <i class="fa-regular fa-heart"></i>
+                                    </span>
+                                    <span id="numLikes_${data.id_post}">0</span>
+                                </div>
+                                <div class="post-data-comments">
+                                    <span>
+                                        <i class="fa-regular fa-comment"></i>
+                                    </span>
+                                    <span>0</span>
+                                </div>
+                            </div>
                         </div>
                     `
                     containerPost.insertAdjacentHTML("afterbegin", newPost);
@@ -140,7 +154,29 @@ var postModule = {
         }
     },
 
-    toast: function(){
-        var toast = `<div class="${classToast}">${texto}</div>`
+    likePost: function(postId){
+        var numLikes = document.getElementById(`numLikes_${postId}`)
+
+        fetch('like_post', {
+            method: 'POST',
+            body: JSON.stringify({'postId': postId}),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        }).then(response => {
+            if(!response.ok){
+                throw new Error('error');
+            }
+            else {
+                return response.json();
+            }
+        }).then(data => {
+            var currentLikes = parseInt(numLikes.textContent);
+
+            currentLikes += 1;
+
+            numLikes.textContent = currentLikes;
+        })
     }
 }

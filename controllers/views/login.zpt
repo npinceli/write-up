@@ -3,32 +3,32 @@
         <title>Write Up - Login</title>
         <script src="main_js"></script>
         <link rel="stylesheet" type="text/css" href="main_css">
+        <link rel="stylesheet" type="text/css" href="components_css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body>
-        <div class="container">
-            <div class="fields">
-                <section class="fields-left">
-                    Imagem
-                </section>
-                <section class="fields-right">
-                    <form id="login_form" class="fields-form">
-                        <div class="input-box">
-                            <label for="user">Digite seu usuario</label>
-                            <input type="text" name="user" id="user" autocomplete="off">
-                        </div>
-                        <div class="input-box">
-                            <label for="password">Digite sua senha</label>
-                            <input type="password" name="password" id="password" autocomplete="off">
-                        </div>
-                        <button class="btn-black" id="btn_submit" onclick="loginModule.loginProcess(event)">Entrar</button>
-                        <div class="alert-container">
-                            <div class="alert-box">
-                                <span id="alert" class="alert hidden"></span>
-                            </div>
-                        </div>
-                    </form>
-                </section>
-            </div>
+        <div class="container login">
+            <form id="login_form">
+                <h2>Entre agora!</h2>
+                <div class="form-control">
+                    <label for="user">Usuario</label>
+                    <input type="text" name="user" id="user" autocomplete="off" placeholder="Digite seu usuario">
+                </div>
+                    
+                <div class="form-control">
+                    <label for="password">Senha</label>
+                    <input type="password" name="password" id="password" autocomplete="off" placeholder="Digite sua senha">
+                </div>
+
+                <button id="btn_submit" onclick="loginModule.loginProcess(event)">Enviar</button>
+
+                <div class="other-option">
+                    <span>ou</span>
+                    <a href="/w/write/signup">Crie uma conta</a>
+                </div>
+            </form>
+            <img src="images/bg2" class="container-img"> 
         </div>
+        <div id="toastBox"></div>
     </body>
 </html>

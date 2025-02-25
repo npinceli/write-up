@@ -17,7 +17,7 @@ class Feed(SimpleItem.SimpleItem):
 
     def index_html(self):
         """."""
-        signed = self.REQUEST.SESSION.get('1')
+        signed = self.REQUEST.SESSION.get('authenticated')
         user_id = self.REQUEST.SESSION.get('user_id')
 
         data = self._write_model.search_user_info(user_id=user_id)[0]
@@ -54,6 +54,9 @@ class Feed(SimpleItem.SimpleItem):
         self._feed_model.follow_user(user_id=user_id,
                                      following_id=following_id)
 
+        self.send_notification(notifier_id=user_id, type=3,
+                               notified_id=following_id)
+
         self.REQUEST.response.setStatus(200)
 
         return json.dumps({"msg": "Success"})
@@ -88,6 +91,7 @@ class Feed(SimpleItem.SimpleItem):
             ok = {
                     'msg': 'Criado com sucesso',
                     'id_user': post[0]['id_user'],
+                    'id_post': post[0]['id_post'],
                     'name': post[0]['name'],
                     'username': post[0]['username'],
                     'avatar': post[0]['avatar'],
@@ -95,3 +99,46 @@ class Feed(SimpleItem.SimpleItem):
                 }
             self.REQUEST.response.setStatus(200)
             return json.dumps(ok)
+
+    def like_post(self):
+        """."""
+        notifier_id = self.REQUEST.SESSION.get('user_id')
+        data = self.REQUEST.get('BODY')
+        data = json.loads(data)
+        post_id = data.get('postId')
+
+        liked = self._feed_model.like_post(post_id=post_id,
+                                           user_id=notifier_id)
+
+        post_infos = self._feed_model.get_post_info(post_id=post_id)[0]
+
+        if liked:
+            self.send_notification(notifier_id=notifier_id,
+                                   post_id=post_id, type=1,
+                                   notified_id=post_infos.notified_id)
+
+            self.REQUEST.response.setStatus(200)
+            return json.dumps({"msg": "Success"})
+
+    def send_notification(self, notifier_id, notified_id, type, post_id=None):
+        """."""
+        notifier_infos = self._feed_model.get_user_info(
+                user_id=notifier_id)[0]
+
+        username = notifier_infos.username
+
+        message = ""
+
+        # Like
+        if type == 1:
+            message = "{} curtiu a sua postagem.".format(username)
+        # Comment
+        elif type == 2:
+            message = "{} comentou na sua postagem".format(username)
+        # Follow 
+        elif type == 3:
+            message = "{} seguiu voce.".format(username)
+
+        self._feed_model.ins_notification(
+            notifier_id=notifier_id, notified_id=notified_id,
+            post_id=post_id, type=type, message=message)

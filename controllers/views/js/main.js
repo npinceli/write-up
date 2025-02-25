@@ -1,51 +1,23 @@
 var registrationModule = {
     signupProcess: function(event) {
         event.preventDefault();
+        componentsModule.setLoading(true);
 
         const form = document.getElementById('registration_form');
         const formData = new FormData(form);
-        const alert = document.getElementById('alert');
-
-        alert.classList.add('hidden');
-        alert.classList.remove('visible');
-        alert.textContent = '';
-
-        const user = formData.get('user');
-        const name = formData.get('name');
-        const genre = formData.get('genre');
-        const password = formData.get('password');
-        const confirm_password = formData.get('confirm_password');
-
-        this.setLoading(true);
 
         setTimeout(() => {
-            let fieldsV = this.validateFields(user, name, genre, password, confirm_password)
-            if (fieldsV.valid === false) {
-                alert.classList.add('visible');
-                alert.classList.remove('hidden');
-                alert.textContent = fieldsV.message;
-                this.setLoading(false);
-                return;
+
+            const password = formData.get('password');
+            const confirm_password = formData.get('confirm_password');
+
+            if (password != confirm_password){
+                let msg = 'As senhas precisam ser iguais.'
+                componentsModule.showToast(msg, 2)
+                componentsModule.setLoading(false);
+                return false;
             }
 
-            let passwordV = this.validatePassword(password, confirm_password)
-            if (passwordV.valid === false) {
-                alert.classList.add('visible');
-                alert.classList.remove('hidden');
-                alert.textContent = passwordV.message;
-                this.setLoading(false);
-                return;
-            }
-
-            let userV = this.validateUser(user)
-            if (userV.valid === false) {
-                alert.classList.add('visible');
-                alert.classList.remove('hidden');
-                alert.textContent = userV.message;
-                this.setLoading(false);
-                return;
-            }
-    
             fetch('signup_process',{
                     method: 'POST',
                     body: formData,
@@ -53,68 +25,47 @@ var registrationModule = {
                 })
                 .then(response => {
                     if (!response.ok) {
-                        return response.json().then(err => {
-                            throw new Error(err.error);
-                        });
+                        return response.json().then(data => {
+                            const errorMessage = data.error;
+                            const status = response.status;
+                            const error = new Error(errorMessage);
+                            error.status = status
+                            throw error;
+                        })
                     }
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data.success);
+                    window.location = '/w/write/avatar/'
                 })
                 .catch(error => {
-                    console.log(error)
-                    alert.classList.add('visible');
-                    alert.classList.remove('hidden');
-                    alert.textContent = error.message;
-                })
+                    let type = '';
+                    if (error.status == 400 || error.status == 404 || error.status == 500) {
+                        type = 2
+                    } else if (error.status == 401) {
+                        type = 3
+                    }
+                    componentsModule.showToast(error.message, type)
+                    componentsModule.setLoading(false);
+                    return false;
+                    })
                 .finally(() => {
-                    this.setLoading(false);
+                    componentsModule.setLoading(false);
                 })
         }, 1500)
-        
     },
 
-    validateFields: function(user, name, genre, password, confirm_password) {
-        if (user === '' || name === '' || genre === '' || password === '' || confirm_password === '') {
-            return {valid: false, message: "Preencha todos os campos"}
-        }
-        return {valid: true}
-    },
+    avatar: function(event){
+        event.preventDefault();
 
-    validatePassword: function(password1, password2) {
-        if (password1 != password2){
-            return {valid: false, message: "As senhas sao diferentes"}
-        } else {
-            if (password1.length < 8) {
-                return {valid: false, message: "A senha precisa ter no minimo 8 caracteres"}
-            }
-        }
-        return {valid: true}
-    },
+        const form = document.getElementById('avatar');
+        const formData = new FormData(form);
 
-    validateUser: function(user) {
-        if (user.length < 3) {
-            return {valid: false, message: "Seu usuario precisa ter no minimo 3 caracteres"}
-        }
-        return {valid: true}
-    },
-
-    setLoading: function(loading){
-
-        const submitButton = document.getElementById('btn_submit');
-
-        if (loading) {
-            submitButton.disabled = true;
-            submitButton.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-circle"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-            `
-            submitButton.querySelector('.lucide-loader-circle').style.animation = 'rotate 2s linear infinite'
-
-        } else {
-            submitButton.disabled = false;
-            submitButton.textContent = 'Cadastrar'
-        }
+        fetch('/w/write/upload_avatar', {
+            method: 'POST',
+            body: formData,
+            credentials: 'same-origin'
+        })
     }
 }
 
@@ -124,48 +75,76 @@ var loginModule = {
 
         const form = document.getElementById('login_form');
         const formData = new FormData(form);
-        const alert = document.getElementById('alert');
 
-        alert.classList.add('hidden');
-        alert.classList.remove('visible');
-        alert.textContent = '';
-
-        const user = formData.get('user');
-        const password = formData.get('password');
-
-        this.setLoading(true);
+        componentsModule.setLoading(true);
 
         setTimeout(() => {
-            if(user === '' || password === ''){
-                alert.classList.add('visible');
-                alert.classList.remove('hidden');
-                alert.textContent = 'Preencha todos os campos';
-                this.setLoading(false);
-                return;
-            }
             fetch('login_process',{
                 method: 'POST',
                 body: formData,
                 credentials: 'same-origin'
             }).then(response => {
-                if (!response.ok) {
-                    return response.json().then(err => {
-                        throw new Error(err.error);
-                    });
+                if (!response.ok){
+                    return response.json().then(data => {
+                        const errorMessage = data.error;
+                        const status = response.status;
+                        const error = new Error(errorMessage);
+                        error.status = status
+                        throw error;
+                    })
                 }
-            }).then(() => {
-                window.location = '/w/write/feed/'
-            }).catch(error => {
-                alert.classList.add('visible');
-                alert.classList.remove('hidden');
-                alert.textContent = error.message;
-                this.setLoading(false);
-                return;
+                return response.json()
+            }).then((data) => {
+                window.location = '/w/feed/'
+            }).catch((error) => {
+                let type = '';
+                if (error.status == 400 || error.status == 404 || error.status == 500) {
+                    type = 2
+                } else if (error.status == 401) {
+                    type = 3
+                }
+                componentsModule.showToast(error.message, type)
+                componentsModule.setLoading(false);
+                return false;
             }).finally(() => {
-                this.setLoading(false);
+                componentsModule.setLoading(false);
             })
 
         }, 1500);
+    }
+}
+
+var componentsModule = {
+    toastIcon: function(type){
+        let success = '<i class="fa-solid fa-circle-check" style="color: green;"></i>';
+        let error = '<i class="fa-solid fa-circle-xmark" style="color: red;"></i>';
+        let invalid = '<i class="fa-solid fa-circle-exclamation" style="color: orange"></i>';
+
+        if (type == 1) {
+            return success
+        } else if (type == 2){
+            return error
+        } else if (type == 3) {
+            return invalid
+        }
+    },
+
+    showToast: function(msg, type){
+        let toastBox = document.getElementById('toastBox');
+        let toast = document.createElement('div');
+        let content = this.toastIcon(type) + msg;
+        toast.classList.add('toast');
+        toast.innerHTML = content;
+        toastBox.appendChild(toast);
+
+        if (toastBox.childElementCount == 10) {
+            const firstToast = toastBox.firstChild;
+            firstToast.remove();
+        }
+
+        setTimeout(() => {
+            toast.remove();
+        }, 3000)
     },
 
     setLoading: function(loading){
@@ -174,14 +153,11 @@ var loginModule = {
 
         if (loading) {
             submitButton.disabled = true;
-            submitButton.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-circle"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-            `
-            submitButton.querySelector('.lucide-loader-circle').style.animation = 'rotate 2s linear infinite'
-
+            submitButton.innerHTML = `<i class="fa-solid fa-spinner fa-spin" style="font-size: 18px"></i>`
+            submitButton.querySelector('.fa-spin').style.animation = 'rotate 1.5s linear infinite'
         } else {
             submitButton.disabled = false;
-            submitButton.textContent = 'Entrar'
+            submitButton.textContent = 'Enviar'
         }
     }
 }

@@ -3,48 +3,42 @@
     <title>Write Up - Cadastro</title>
     <script src="main_js"></script>
     <link rel="stylesheet" type="text/css" href="main_css">
+    <link rel="stylesheet" type="text/css" href="components_css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="container">
-        <div class="fields">
-            <section class="fields-left">
-                <form id="registration_form" class="fields-form">
-                    <div class="input-box">
-                        <label for="name">Digite seu nome</label>
-                        <input type="text" id="name" name="name">
-                    </div>
-                    <div class="input-box">
-                        <label for="user">Digite seu usuario</label>
-                        <input type="text" name="user" id="user" autocomplete="off">
-                    </div>
-                    <div class="input-box">
-                        <label for="genre">Selecione seu genero</label>
-                        <select id="genre" name="genre">
-                            <option value="0"></option>
-                            <option value="1">Masculino</option>
-                            <option value="2">Feminino</option>
-                        </select>
-                    </div>
-                    <div class="input-box">
-                        <label for="password">Digite sua senha</label>
-                        <input type="password" name="password" id="password" autocomplete="off">
-                    </div>
-                    <div class="input-box">
-                        <label for="confirm_password">Confirme sua senha</label>
-                        <input type="password" name="confirm_password" id="confirm_password">
-                    </div>
-                    <button class="btn-black" id="btn_submit" onclick="registrationModule.signupProcess(event)">Cadastrar</button>
-                    <div class="alert-container">
-                        <div class="alert-box">
-                            <span id="alert" class="alert hidden"></span>
-                        </div>
-                    </div>
-                </form>
-            </section>
-            <section class="fields-right" style="overflow: hidden;">
-                Imagem
-            </section>
-        </div>
+    <div class="container signup">
+        <img src="images/bg" class="container-img">
+        <form id="registration_form">
+            <h2>Crie sua conta</h2>
+            <div class="form-control">
+                <label for="name">Nome</label>
+                <input type="text" id="name" name="name" autocomplete="off" placeholder="Digite seu nome">
+            </div>
+
+            <div class="form-control">
+                <label for="user">Usuario</label>
+                <input type="text" name="user" id="user" autocomplete="off" placeholder="Digite seu usuario">
+            </div>
+    
+            <div class="form-control">
+                <label for="password">Senha</label>
+                <input type="password" name="password" id="password" autocomplete="off" placeholder="Digite sua senha">
+            </div>
+            
+            <div class="form-control">
+                <label for="confirm_password">Confirme sua senha</label>
+                <input type="password" name="confirm_password" id="confirm_password" autocomplete="off" placeholder="Digite novamente">
+            </div>
+
+            <button id="btn_submit" onclick="registrationModule.signupProcess(event)">Enviar</button>
+            
+            <div class="other-option">
+                <span>ou</span>
+                <a href="/w/write/login">Ja tenho uma conta!</a>
+            </div>
+        </form>
     </div>
+    <div id="toastBox"></div>
 </body>
 </html>

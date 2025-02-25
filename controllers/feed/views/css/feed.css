@@ -148,13 +148,22 @@
     background-color: var(--blue-300);
 }
 
+.suggestions-items a {
+    color: #000;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.suggestions-items a:hover {
+    text-decoration: underline;
+}
+
 .hidden {
     display: none;
 }
 
 .post {
     background-color: var(--blue-100);
-    border: 1px solid var(--blue-300);
     padding: 16px;
     margin-top: 12px;
     border-radius: 8px;
@@ -178,6 +187,16 @@
     display: flex;
     flex-direction: column;
     margin-left: 12px;
+}
+
+.post-user-info a{
+    color: #000;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.post-user-info a:hover {
+    text-decoration: underline;
 }
 
 .post-user-date {
@@ -301,8 +320,18 @@
     }
 }
 
-.toast {
-    position: fixed;
-    left: 50%;
-    bottom: 30px;
+.post-data {
+    display: flex;
+    padding: 4px 0;
+    gap: 12px;
+}
+
+.post-data-likes, .post-data-comments {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-like-post, .btn-comment-post {
+    cursor: pointer;
 }

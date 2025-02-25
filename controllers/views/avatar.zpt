@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>Write Up - Avatar</title>
+        <script src="/w/write/main_js"></script>
+        <link rel="stylesheet" type="text/css" href="/w/write/main_css">
+    </head>
+    <body>
+        <div class="container-avatar">
+            <form id="avatar" class="form-avatar">
+                <p>Selecione sua foto de perfil</p>
+                <input id="user_id" name="user_id" type="hidden" tal:attributes="value options/user_id">
+                <label for="fileInput" class="custom-avatar-input">
+                    Clique para selecionar
+                    <input id="fileInput" class="avatar-input" type="file" name="file" accept="image/*">
+                </label>
+                <div class="avatar-preview">
+                    <svg id="icon-avatar" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    <img id="preview" src="" alt="Preview da Imagem" style="display: none; object-fit: cover;">
+                </div>
+                <button class="btn-submit-avatar" onclick="registrationModule.avatar(event)">Enviar</button>
+            </form>
+        </div>
+
+        <script>
+            const fileInput = document.getElementById('fileInput');
+            const previewImage = document.getElementById('preview');
+            const avatar = document.getElementById('icon-avatar');
+
+            fileInput.addEventListener('change', function(event) {
+                const file = event.target.files[0]; 
+                if (file) {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        previewImage.style.display = 'block'; 
+                        avatar.style.display = 'none';
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            });
+        </script>
+    </body>
+</html>

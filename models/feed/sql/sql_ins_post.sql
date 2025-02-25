@@ -7,9 +7,10 @@ WITH inserted_post AS (
         <dtml-sqlvar user_id type="int">,
         <dtml-sqlvar post_text type="string">
     )
-    RETURNING id_user, created_at
+    RETURNING id_user, id_post, created_at
 )
 SELECT 
+    inserted_post.id_post,
     inserted_post.id_user,
     TO_CHAR(inserted_post.created_at, 'DD/MM/YYYY HH24:MI') AS created_at_f,
     users.name,

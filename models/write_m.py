@@ -8,11 +8,10 @@ product_path = os.path.join(package_home(globals())) + '/'
 
 class WriteM(SimpleItem.SimpleItem):
     """Main model."""
-    def create_user(self, name, user, genre, password, avatar):
+    def create_user(self, name, user, password):
         """."""
         return self._sql_create_user(
-            name=name, user=user, genre=genre, password=password,
-            avatar=avatar)
+            name=name, user=user, password=password)
 
     def search_user(self, user):
         """."""
@@ -24,7 +23,7 @@ class WriteM(SimpleItem.SimpleItem):
 
     _sql_create_user = SQL(
         id='zsql_create_user', title='', connection_id='connection',
-        arguments='name\nuser\ngenre\npassword\navatar', template=open(
+        arguments='name\nuser\npassword', template=open(
             product_path + 'sql/sql_create_user.sql').read()
     )
 
