@@ -299,6 +299,11 @@
     z-index: 7;
 }
 
+.btn-open-modal i {
+    font-size: 22px;
+    color: #FFF;
+}
+
 .overlay-post {
     position: fixed;
     top: 0;
@@ -334,4 +339,8 @@
 
 .btn-like-post, .btn-comment-post {
     cursor: pointer;
+}
+
+.btn-like-post i:hover {
+    color: red;
 }

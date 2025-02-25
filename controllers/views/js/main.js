@@ -6,18 +6,17 @@ var registrationModule = {
         const form = document.getElementById('registration_form');
         const formData = new FormData(form);
 
+        const password = formData.get('password');
+        const confirm_password = formData.get('confirm_password');
+
+        if (password != confirm_password){
+            const msg = 'As senhas precisam ser iguais.'
+            componentsModule.showToast(msg, 2)
+            componentsModule.setLoading(false);
+            return false;
+        }
+
         setTimeout(() => {
-
-            const password = formData.get('password');
-            const confirm_password = formData.get('confirm_password');
-
-            if (password != confirm_password){
-                let msg = 'As senhas precisam ser iguais.'
-                componentsModule.showToast(msg, 2)
-                componentsModule.setLoading(false);
-                return false;
-            }
-
             fetch('signup_process',{
                     method: 'POST',
                     body: formData,
@@ -72,11 +71,20 @@ var registrationModule = {
 var loginModule = {
     loginProcess: function(event){
         event.preventDefault();
+        componentsModule.setLoading(true);
 
         const form = document.getElementById('login_form');
         const formData = new FormData(form);
 
-        componentsModule.setLoading(true);
+        const user = formData.get('user').trim();
+        const password = formData.get('password');
+
+        if (!user || !password) {
+            const msg = 'Preencha todos os campos.'
+            componentsModule.showToast(msg, 2);
+            componentsModule.setLoading(false);
+            return false;
+        }
 
         setTimeout(() => {
             fetch('login_process',{
