@@ -137,7 +137,7 @@ var componentsModule = {
         toast.innerHTML = content;
         toastBox.appendChild(toast);
 
-        if (toastBox.childElementCount == 10) {
+        if (toastBox.childElementCount == 4) {
             const firstToast = toastBox.firstChild;
             firstToast.remove();
         }
