@@ -16,7 +16,11 @@ class WriteUp(SimpleItem.SimpleItem):
     main_css = PageTemplateFile('views/css/main.css', globals())
     components_css = PageTemplateFile('views/css/components.css', globals())
 
-    _write_model = WriteM()
+    def _write_model(self):
+        """."""
+        return WriteM(
+            id='feed',
+            connection=self.connection)
 
     def index_html(self):
         """Homepage."""
@@ -32,13 +36,14 @@ class WriteUp(SimpleItem.SimpleItem):
 
     def signup_process(self):
         """Process user signup."""
-        self.REQUEST.response.setHeader('Content-Type', 'application/json')
+        write_model = self._write_model()
 
         data = self.REQUEST.form
+        data = json.loads(data)
 
-        name = data.get('name')
-        user = data.get('user')
-        pwd = data.get('password')
+        name = data['name']
+        user = data['user']
+        pwd = data['password']
 
         if ((not name or name == '') or (not user or user == '') or (
                 not pwd or pwd == '')):
@@ -48,14 +53,14 @@ class WriteUp(SimpleItem.SimpleItem):
 
         pwd = pbkdf2_sha256.hash(pwd)
 
-        verify_user = self._write_model.search_user(user=user)
+        verify_user = write_model.search_user(user=user)
         if verify_user:
             msg = {'error': 'Usuario ja cadastrado.'}
             self.REQUEST.response.setStatus(400)
             return json.dumps(msg)
 
         try:
-            self._write_model.create_user(name=name, user=user, password=pwd)
+            write_model.create_user(name=name, user=user, password=pwd)
         except Exception:
             msg = {'error': 'Erro ao criar o usuario'}
             self.REQUEST.response.setStatus(500)
@@ -74,19 +79,20 @@ class WriteUp(SimpleItem.SimpleItem):
 
     def login_process(self):
         """Process user login."""
-        self.REQUEST.response.setHeader('Content-Type', 'application/json')
+        write_model = self._write_model()
 
         data = self.REQUEST.form
+        data = json.loads(data)
 
-        user = data.get('user')
-        password = data.get('password')
+        user = data['user']
+        password = data['password']
 
         if (not user or user == '') or (not password or password == ''):
             msg = {'error': 'Preencha todos os campos.'}
             self.REQUEST.response.setStatus(400)
             return json.dumps(msg)
 
-        user_info = self._write_model.search_user_info(user=user)
+        user_info = write_model.search_user_info(user=user)
 
         if not user_info or len(user_info) == 0:
             self.REQUEST.response.setStatus(404)
@@ -109,13 +115,13 @@ class WriteUp(SimpleItem.SimpleItem):
 
     def avatar(self):
         """."""
-        signup_complete = self.REQUEST.SESSION.get('signup_complete')
+        write_model = self._write_model()
 
-        user = 17
+        # signup_complete = self.REQUEST.SESSION.get('signup_complete')
 
-        user_info = self._write_model.search_user_info(user_id=user)[0]
+        # user_info = write_model.search_user_info(user_id=user)[0]
 
-        return self._avatar(user_id=user_info['id'])
+        # return self._avatar(user_id=user_info['id'])
 
         # if signup_complete:
         #     return self._avatar()

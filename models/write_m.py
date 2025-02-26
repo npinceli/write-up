@@ -8,6 +8,13 @@ product_path = os.path.join(package_home(globals())) + '/'
 
 class WriteM(SimpleItem.SimpleItem):
     """Main model."""
+
+    def __init__(self, id, connection=None):
+        """."""
+        self.id = id
+        if connection:
+            self.connection = connection
+
     def create_user(self, name, user, password):
         """."""
         return self._sql_create_user(
