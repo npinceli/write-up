@@ -19,7 +19,7 @@ class WriteUp(SimpleItem.SimpleItem):
     def _write_model(self):
         """."""
         return WriteM(
-            id='feed',
+            id='write',
             connection=self.connection)
 
     def index_html(self):
@@ -113,21 +113,6 @@ class WriteUp(SimpleItem.SimpleItem):
             self.REQUEST.response.setStatus(401)
             return json.dumps(msg)
 
-    def avatar(self):
-        """."""
-        write_model = self._write_model()
-
-        # signup_complete = self.REQUEST.SESSION.get('signup_complete')
-
-        # user_info = write_model.search_user_info(user_id=user)[0]
-
-        # return self._avatar(user_id=user_info['id'])
-
-        # if signup_complete:
-        #     return self._avatar()
-        # else:
-        #     return self.REQUEST.RESPONSE.redirect('/w/write')
-
     def upload_avatar(self):
         """."""
         data = self.REQUEST.form
@@ -147,3 +132,18 @@ class WriteUp(SimpleItem.SimpleItem):
             return self.REQUEST.RESPONSE.redirect('/w/write/login')
         else:
             raise Exception(2)
+
+    # def avatar(self):
+    #     """."""
+    #     write_model = self._write_model()
+
+    #     signup_complete = self.REQUEST.SESSION.get('signup_complete')
+
+    #     user_info = write_model.search_user_info(user_id=user)[0]
+
+    #     return self._avatar(user_id=user_info['id'])
+
+    #     if signup_complete:
+    #         return self._avatar()
+    #     else:
+    #         return self.REQUEST.RESPONSE.redirect('/w/write')

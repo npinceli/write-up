@@ -12,7 +12,11 @@ class Feed(SimpleItem.SimpleItem):
     feed_js = PageTemplateFile('views/js/feed.js', globals())
     feed_css = PageTemplateFile('views/css/feed.css', globals())
 
-    _write_model = WriteM()
+    def _write_model(self):
+        """."""
+        return WriteM(
+            id='write',
+            connection=self.connection)
 
     def _feed_model(self):
         """."""
@@ -23,11 +27,12 @@ class Feed(SimpleItem.SimpleItem):
     def index_html(self):
         """."""
         feed_model = self._feed_model()
+        write_model = self._write_model()
 
         signed = self.REQUEST.SESSION.get('authenticated')
         user_id = self.REQUEST.SESSION.get('user_id')
 
-        data = self._write_model.search_user_info(user_id=user_id)[0]
+        data = write_model.search_user_info(user_id=user_id)[0]
         sugg = self.suggestion_list(user_id=user_id)
         posts = feed_model.post_list(user_id=user_id)
 
