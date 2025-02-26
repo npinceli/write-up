@@ -344,3 +344,11 @@
 .btn-like-post i:hover {
     color: red;
 }
+
+.btn-remove-like {
+    cursor: pointer;
+}
+
+.color-red {
+    color: red;
+}

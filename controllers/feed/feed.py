@@ -13,16 +13,23 @@ class Feed(SimpleItem.SimpleItem):
     feed_css = PageTemplateFile('views/css/feed.css', globals())
 
     _write_model = WriteM()
-    _feed_model = FeedM()
+
+    def _feed_model(self):
+        """."""
+        return FeedM(
+            id='feed',
+            connection=self.connection)
 
     def index_html(self):
         """."""
+        feed_model = self._feed_model()
+
         signed = self.REQUEST.SESSION.get('authenticated')
         user_id = self.REQUEST.SESSION.get('user_id')
 
         data = self._write_model.search_user_info(user_id=user_id)[0]
         sugg = self.suggestion_list(user_id=user_id)
-        posts = self._feed_model.post_list()
+        posts = feed_model.post_list(user_id=user_id)
 
         if signed:
             return self._index(
@@ -40,19 +47,21 @@ class Feed(SimpleItem.SimpleItem):
 
     def suggestion_list(self, user_id):
         """."""
-        return self._feed_model.search_suggestions(user_id=user_id)
+        feed_model = self._feed_model()
+
+        return feed_model.search_suggestions(user_id=user_id)
 
     def follow_user(self):
         """."""
-        self.REQUEST.response.setHeader('Content-Type', 'application/json')
+        feed_model = self._feed_model()
 
         user_id = self.REQUEST.SESSION.get('user_id')
         data = self.REQUEST.get('BODY')
         data = json.loads(data)
-        following_id = int(data.get('userId'))
+        following_id = int(data['userId'])
 
-        self._feed_model.follow_user(user_id=user_id,
-                                     following_id=following_id)
+        feed_model.follow_user(user_id=user_id,
+                               following_id=following_id)
 
         self.send_notification(notifier_id=user_id, type=3,
                                notified_id=following_id)
@@ -63,15 +72,15 @@ class Feed(SimpleItem.SimpleItem):
 
     def unfollow_user(self):
         """."""
-        self.REQUEST.response.setHeader('Content-Type', 'application/json')
+        feed_model = self._feed_model()
 
         user_id = self.REQUEST.SESSION.get('user_id')
         data = self.REQUEST.get('BODY')
         data = json.loads(data)
-        unfollowing_id = int(data.get('userId'))
+        unfollowing_id = int(data['userId'])
 
-        self._feed_model.unfollow_user(user_id=user_id,
-                                       unfollowing_id=unfollowing_id)
+        feed_model.unfollow_user(user_id=user_id,
+                                 unfollowing_id=unfollowing_id)
 
         self.REQUEST.response.setStatus(200)
 
@@ -79,13 +88,15 @@ class Feed(SimpleItem.SimpleItem):
 
     def create_post(self):
         """."""
+        feed_model = self._feed_model()
+
         user_id = self.REQUEST.SESSION.get('user_id')
         data = self.REQUEST.get('BODY')
         data = json.loads(data)
         post_text = data['postText']
 
-        post = self._feed_model.create_post(user_id=user_id,
-                                            post_text=post_text)
+        post = feed_model.create_post(user_id=user_id,
+                                      post_text=post_text)
 
         if post:
             ok = {
@@ -102,15 +113,17 @@ class Feed(SimpleItem.SimpleItem):
 
     def like_post(self):
         """Curtir a postagem de um usuario."""
+        feed_model = self._feed_model()
+
         notifier_id = self.REQUEST.SESSION.get('user_id')
         data = self.REQUEST.get('BODY')
         data = json.loads(data)
         post_id = data['postId']
 
-        liked = self._feed_model.like_post(post_id=post_id,
-                                           user_id=notifier_id)
+        liked = feed_model.like_post(post_id=post_id,
+                                     user_id=notifier_id)
 
-        post_infos = self._feed_model.get_post_info(post_id=post_id)[0]
+        post_infos = feed_model.get_post_info(post_id=post_id)[0]
 
         if liked:
             self.send_notification(notifier_id=notifier_id,
@@ -122,7 +135,9 @@ class Feed(SimpleItem.SimpleItem):
 
     def send_notification(self, notifier_id, notified_id, type, post_id=None):
         """."""
-        notifier_infos = self._feed_model.get_user_info(
+        feed_model = self._feed_model()
+
+        notifier_infos = feed_model.get_user_info(
                 user_id=notifier_id)[0]
 
         username = notifier_infos.username
@@ -139,6 +154,6 @@ class Feed(SimpleItem.SimpleItem):
         elif type == 3:
             message = "{} seguiu voce.".format(username)
 
-        self._feed_model.ins_notification(
+        feed_model.ins_notification(
             notifier_id=notifier_id, notified_id=notified_id,
             post_id=post_id, type=type, message=message)

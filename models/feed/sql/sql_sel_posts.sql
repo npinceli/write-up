@@ -6,7 +6,12 @@ SELECT
     u.name,
     u.username,
     u.avatar,
-    COUNT(l.id_like) AS num_likes
+    COUNT(l.id_like) AS num_likes,
+    CASE
+        WHEN EXISTS (SELECT 1 FROM likes l2 WHERE l2.id_post = p.id_post AND l2.id_user = <dtml-sqlvar user_id type="int">)
+        THEN 1
+        ELSE 0
+    END AS user_liked
 FROM 
     post p
     INNER JOIN users u ON u.id = p.id_user

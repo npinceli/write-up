@@ -9,6 +9,12 @@ product_path = os.path.join(package_home(globals())) + '/'
 class FeedM(SimpleItem.SimpleItem):
     """Feed Model,"""
 
+    def __init__(self, id, connection=None):
+        """."""
+        self.id = id
+        if connection:
+            self.connection = connection
+
     def search_suggestions(self, user_id):
         """Returns 5 random users"""
         return self._sql_search_suggestions(user_id=user_id)
@@ -26,9 +32,9 @@ class FeedM(SimpleItem.SimpleItem):
         """."""
         return self._sql_ins_post(user_id=user_id, post_text=post_text)
 
-    def post_list(self):
+    def post_list(self, user_id):
         """."""
-        return self._sql_sel_posts()
+        return self._sql_sel_posts(user_id=user_id)
 
     def like_post(self, post_id, user_id):
         """."""
@@ -77,7 +83,7 @@ class FeedM(SimpleItem.SimpleItem):
 
     _sql_sel_posts = SQL(
         id='zsql_sel_posts', title='', connection_id='connection',
-        arguments='', template=open(
+        arguments='user_id', template=open(
             product_path + 'sql/sql_sel_posts.sql').read()
     )
 
