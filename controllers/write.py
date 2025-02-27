@@ -39,8 +39,6 @@ class WriteUp(SimpleItem.SimpleItem):
         write_model = self._write_model()
 
         data = self.REQUEST.form
-        data = json.loads(data)
-
         name = data['name']
         user = data['user']
         pwd = data['password']
@@ -82,8 +80,6 @@ class WriteUp(SimpleItem.SimpleItem):
         write_model = self._write_model()
 
         data = self.REQUEST.form
-        data = json.loads(data)
-
         user = data['user']
         password = data['password']
 
