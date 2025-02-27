@@ -46,12 +46,12 @@
                 <div class="post-data">
                     <div class="post-data-likes">
                         <tal:block tal:condition="python: post['user_liked'] == 0">
-                            <span class="btn-like-post" tal:attributes="id string:btnLikePost_${post/id_post}; onclick string:postModule.likePost(${post/id_post})">
+                            <span class="btn-like-post" tal:attributes="id string:btnToggleLike_${post/id_post}; onclick string:postModule.likePost(${post/id_post})">
                                 <i tal:attributes="id string:heart_${post/id_post}" class="fa-regular fa-heart"></i>
                             </span>                       
                         </tal:block>
                         <tal:block tal:condition="python: post['user_liked'] == 1">
-                            <span class="btn-remove-like" tal:attributes="id string:btnRemoveLike_${post/id_post}; onclick string:postModule.removeLike(${post/id_post})">
+                            <span class="btn-remove-like" tal:attributes="id string:btnToggleLike_${post/id_post}; onclick string:postModule.removeLike(${post/id_post})">
                                 <i tal:attributes="id string:heart_${post/id_post}" class="fa-solid fa-heart color-red"></i>
                             </span>                       
                         </tal:block>

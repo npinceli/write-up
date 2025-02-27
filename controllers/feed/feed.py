@@ -125,8 +125,9 @@ class Feed(SimpleItem.SimpleItem):
         data = json.loads(data)
         post_id = data['postId']
 
-        liked = feed_model.like_post(post_id=post_id,
-                                     user_id=notifier_id)
+        liked = feed_model.toggle_like_post(post_id=post_id,
+                                            user_id=notifier_id,
+                                            action='toggle_on')
 
         post_infos = feed_model.get_post_info(post_id=post_id)[0]
 
@@ -137,6 +138,26 @@ class Feed(SimpleItem.SimpleItem):
 
             self.REQUEST.response.setStatus(200)
             return json.dumps({"msg": "Success"})
+
+    def remove_like(self):
+        """."""
+        feed_model = self._feed_model()
+
+        user_id = self.REQUEST.SESSION.get('user_id')
+        data = self.REQUEST.get('BODY')
+        data = json.loads(data)
+        post_id = data['postId']
+
+        like = feed_model.get_like_info(
+            post_id=post_id, user_id=user_id).dictionaries()[0]
+
+        feed_model.toggle_like_post(post_id=post_id,
+                                    user_id=user_id,
+                                    action='toggle_off',
+                                    like_id=like['id_like'])
+
+        self.REQUEST.response.setStatus(200)
+        return json.dumps({"msg": "Success"})
 
     def send_notification(self, notifier_id, notified_id, type, post_id=None):
         """."""

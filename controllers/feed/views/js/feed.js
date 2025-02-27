@@ -110,7 +110,7 @@ var postModule = {
                         <p class="post-text">${text}</p>
                         <div class="post-data">
                             <div class="post-data-likes">
-                                <span class="btn-like-post" id="btnLikePost_${data.id_post}" onclick="postModule.likePost(${data.id_post})">
+                                <span class="btn-like-post" id="btnToggleLike_${data.id_post}" onclick="postModule.likePost(${data.id_post})">
                                     <i id="heart_${data.id_post}" class="fa-regular fa-heart"></i>
                                 </span>
                                 <span id="numLikes_${data.id_post}">0</span>
@@ -155,7 +155,7 @@ var postModule = {
     likePost: function(postId){
         var numLikes = document.getElementById(`numLikes_${postId}`);
         var heart = document.getElementById(`heart_${postId}`);
-        var btnLikePost = document.getElementById(`btnLikePost_${postId}`);
+        var btnToggleLike = document.getElementById(`btnToggleLike_${postId}`);
 
         fetch('like_post', {
             method: 'POST',
@@ -183,16 +183,16 @@ var postModule = {
             heart.classList.add('fa-solid');
             heart.classList.add('color-red');
 
-            btnLikePost.classList.remove('btn-like-post');
-            btnLikePost.classList.add('btn-remove-like');
-            btnLikePost.setAttribute("onclick", `postModule.removeLike(${postId})`)
+            btnToggleLike.classList.remove('btn-like-post');
+            btnToggleLike.classList.add('btn-remove-like');
+            btnToggleLike.setAttribute("onclick", `postModule.removeLike(${postId})`)
         })
     },
 
     removeLike: function(postId){
         var numLikes = document.getElementById(`numLikes_${postId}`);
         var heart = document.getElementById(`heart_${postId}`);
-        var btnRemoveLike = document.getElementById(`btnRemoveLike_${postId}`);
+        var btnToggleLike = document.getElementById(`btnToggleLike_${postId}`);
 
         fetch('remove_like', {
             method: 'POST',
@@ -202,7 +202,7 @@ var postModule = {
             body: JSON.stringify({
                 'postId': postId
             }),
-        }).then(reponse => {
+        }).then(response => {
             if(!response.ok) {
                 return response.json().then(data => {
                     const errorMessage = data.message;
@@ -215,6 +215,14 @@ var postModule = {
 
             currentLikes -= 1;
             numLikes.textContent = currentLikes;
+
+            heart.classList.remove('fa-solid');
+            heart.classList.remove('color-red');
+            heart.classList.add('fa-regular');
+
+            btnToggleLike.classList.remove('btn-remove-like');
+            btnToggleLike.classList.add('btn-like-post');
+            btnToggleLike.setAttribute("onclick", `postModule.likePost(${postId})`)
         })
     }
 }

@@ -36,9 +36,14 @@ class FeedM(SimpleItem.SimpleItem):
         """."""
         return self._sql_sel_posts(user_id=user_id)
 
-    def like_post(self, post_id, user_id):
+    def toggle_like_post(self, post_id, user_id, action, like_id=None):
         """."""
-        return self._sql_ins_like_post(post_id=post_id, user_id=user_id)
+        return self._sql_toggle_like_post(post_id=post_id, user_id=user_id,
+                                          action=action, like_id=like_id)
+
+    def get_like_info(self, post_id, user_id):
+        """."""
+        return self._sql_sel_like_info(post_id=post_id, user_id=user_id)
 
     def get_user_info(self, user_id):
         """."""
@@ -87,10 +92,16 @@ class FeedM(SimpleItem.SimpleItem):
             product_path + 'sql/sql_sel_posts.sql').read()
     )
 
-    _sql_ins_like_post = SQL(
-        id='zsql_ins_like_post', title='', connection_id='connection',
+    _sql_toggle_like_post = SQL(
+        id='zsql_toggle_like_post', title='', connection_id='connection',
+        arguments='post_id\nuser_id\naction\nlike_id', template=open(
+            product_path + 'sql/sql_toggle_like_post.sql').read()
+    )
+
+    _sql_sel_like_info = SQL(
+        id='zsql_toggle_like_post', title='', connection_id='connection',
         arguments='post_id\nuser_id', template=open(
-            product_path + 'sql/sql_ins_like_post.sql').read()
+            product_path + 'sql/sql_sel_like_info.sql').read()
     )
 
     _sql_sel_user_info = SQL(
